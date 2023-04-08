@@ -49,11 +49,22 @@ function createNewElement(item){
     newItem.appendChild(itemNumber);
     newItem.innerHTML += item.nome;
 
+    newItem.appendChild(deleteButton());
     lista.appendChild(newItem);
 
 }
 
 function updateElement(item){
     document.querySelector("[data-id='"+item.id+"']").innerHTML = item.quantidade;
+}
 
+function deleteButton(){
+    const buttonElement = document.createElement("button");
+    buttonElement.innerText = "X";
+
+    buttonElement.addEventListener("click", function(){
+        this.parentNode.remove();
+    })
+
+    return buttonElement
 }
