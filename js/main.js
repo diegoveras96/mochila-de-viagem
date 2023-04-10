@@ -13,26 +13,24 @@ form.addEventListener("submit", (evento) => {
     const nome = evento.target.elements['nome'];
     const quantidade = evento.target.elements['quantidade'];
     const exist = itens.find(elemento => elemento.nome === nome.value);
-    if (nome.value == "" || quantidade.value == "") {
-        alert("Dado Faltando\nInsira os Dados Novamente")
+
+    const atualItem = {
+        "nome": nome.value,
+        "quantidade": quantidade.value
+    };
+
+    if (exist) {
+        atualItem.id = exist.id;
+        updateElement(atualItem);
+
+        itens[itens.findIndex(elemento => elemento.id === exist.id)] = atualItem;
     } else {
-        const atualItem = {
-            "nome": nome.value,
-            "quantidade": quantidade.value
-        };
+        atualItem.id = itens[itens.length - 1] ? (itens[itens.length - 1]).id + 1 : 0;
+        createNewElement(atualItem);
 
-        if (exist) {
-            atualItem.id = exist.id;
-            updateElement(atualItem);
-
-            itens[itens.findIndex(elemento => elemento.id === exist.id)] = atualItem;
-        } else {
-            atualItem.id = itens[itens.length - 1] ? (itens[itens.length - 1]).id + 1 : 0;
-            createNewElement(atualItem);
-
-            itens.push(atualItem);
-        }
+        itens.push(atualItem);
     }
+
 
     localStorage.setItem("itens", JSON.stringify(itens));
 
